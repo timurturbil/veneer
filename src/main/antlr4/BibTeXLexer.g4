@@ -137,9 +137,9 @@ fragment NAME : [a-zA-Z_\-:.+/]([a-zA-Z0-9_\-:.+/'])*;
 // Characters inside a double-quoted string.
 // An escaped quote \" is allowed; a bare { ... } block is allowed inside quotes.
 fragment DQUOTE_CHAR
-    : ~["\\{}]         // any char except double-quote, backslash, or braces
-    | '\\' .           // backslash escape (e.g. \", \\, \{, \&, \%, …)
-    | '{' DQUOTE_CHAR* '}' // inline brace block {TeX markup}, with nesting
+    : ~["\\{}]                // any regular character except ", \, {, and }
+    | '\\' .                  // any escaped character
+    | '{' BRACE_CONTENT* '}'  // brace-delimited block; BRACE_CONTENT permits double quotes inside
     ;
 
 // The contents of a brace-delimited value, handling arbitrary nesting.

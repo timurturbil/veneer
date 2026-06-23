@@ -70,13 +70,6 @@ public class BibTeXSyntaxHighlighter extends AbstractSyntaxHighlighter {
 
         String text = token.getText();
 
-        System.out.printf(
-                "TEXT=[%s] TYPE=%d SYMBOLIC=%s%n",
-                token.getText(),
-                token.getType(),
-                VOCABULARY.getSymbolicName(token.getType())
-        );
-
         if (isComment(token)) {
             sb.appendAndReset(text, theme.comment());
         } else if (isKeyword(token)) {
