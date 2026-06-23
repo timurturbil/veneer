@@ -46,7 +46,7 @@ h.highlight(Path.of("...")); // reads file, returns styled string
 h.print(sourceCode);           // prints to stdout
 ```
 
-Available highlighters: `JavaSyntaxHighlighter`, `PythonSyntaxHighlighter`, `GoSyntaxHighlighter`, `LuaSyntaxHighlighter`, `JavaScriptSyntaxHighlighter`.
+Available highlighters: `JavaSyntaxHighlighter`, `PythonSyntaxHighlighter`, `GoSyntaxHighlighter`, `LuaSyntaxHighlighter`, `JavaScriptSyntaxHighlighter`, `BibTeXSyntaxHighlighter`.
 
 ---
 
@@ -131,6 +131,17 @@ public class MyTheme implements SyntaxTheme {
 | Comments   | `//`, `/* */`, JSX comments                           |
 | Methods    | Declared function names                               |
 | Constants  | Names matching `ALL_CAPS` convention                  |
+
+### BibTeX
+| Category   | Examples                                                        |
+|------------|-----------------------------------------------------------------|
+| Keywords   | `@article`, `@book`, `@string`, `@preamble`, `@comment`         |
+| Strings    | `{brace delimited}`, `"double quoted"`                          |
+| Numbers    | `2024`, `42` (bare integer field values)                        |
+| Comments   | `% line comment`                                                |
+| Cite Keys  | `knuth1984`, `DBLP:conf/pldi/PadhiSM16`                        |
+| Fields     | `author`, `title`, `year`, `doi`                                |
+| Macros     | `jan`, `kopp`, `PRL` (string macro references)                  |
 ---
 
 ## Known quirks
@@ -154,3 +165,13 @@ public class MyTheme implements SyntaxTheme {
 **`null`, `true`, `false`** -> styled as keywords since they behave as reserved words.
 
 **Template literal interpolation** -> the `${` punctuation is left unstyled; only the string content gets the string literal color.
+
+### BibTeX
+
+**`@comment` blocks** -> the entire body of a `@comment{...}` entry is consumed and hidden; inner field-like syntax is not highlighted.
+
+**Brace-escaped quotes** -> `{"}` inside a double-quoted string value is treated as a literal brace block, allowing embedded quotes without breaking the string boundary.
+
+**Concatenation** -> the `#` operator and macro references (e.g. `kopp # et # kubovy`) are supported; macro names are styled as types.
+
+**Both delimiter styles** -> `@article{key, ...}` and `@article(key, ...)` are both recognized.
