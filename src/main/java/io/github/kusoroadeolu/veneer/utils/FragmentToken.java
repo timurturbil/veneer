@@ -55,4 +55,4 @@ public record FragmentToken(Token origin, String text) implements Token {
         public CharStream getInputStream() {
             return origin.getInputStream();
         }
-        }
+}

@@ -6,9 +6,9 @@ import io.github.kusoroadeolu.veneer.theme.SyntaxTheme;
 import io.github.kusoroadeolu.veneer.utils.Constants;
 import io.github.kusoroadeolu.veneer.utils.Utils;
 import org.antlr.v4.runtime.*;
+import io.github.kusoroadeolu.veneer.GoLexer;
 
 import java.util.List;
-import io.github.kusoroadeolu.veneer.GoLexer;
 
 import static io.github.kusoroadeolu.veneer.utils.Constants.NEWLINE;
 import static io.github.kusoroadeolu.veneer.utils.Utils.*;
@@ -33,7 +33,7 @@ public class GoSyntaxHighlighter extends AbstractSyntaxHighlighter {
 
         StyleBuilder sb = Clique.styleBuilder();
         GoLexer lexer = new GoLexer(CharStreams.fromString(s));
-        var tokenStream = toTokenStream(lexer);
+        var tokenStream = toBufferedTokenStream(lexer);
 
         List<Token> tokens = tokenStream.getTokens();
         int size = tokens.size();

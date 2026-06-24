@@ -14,7 +14,6 @@ import java.util.List;
 import static io.github.kusoroadeolu.veneer.BibTeXLexer.*;
 import static io.github.kusoroadeolu.veneer.utils.Utils.isNullOrBlank;
 import static io.github.kusoroadeolu.veneer.utils.Utils.styleMultiLineToken;
-import static org.antlr.v4.runtime.tree.xpath.XPathLexer.VOCABULARY;
 
 public class BibTeXSyntaxHighlighter extends AbstractSyntaxHighlighter {
 
@@ -28,8 +27,8 @@ public class BibTeXSyntaxHighlighter extends AbstractSyntaxHighlighter {
         if (isNullOrBlank(s)) return "";
 
         StyleBuilder sb = Clique.styleBuilder();
-        BibTeXLexer lexer = new BibTeXLexer(CharStreams.fromString(s));
-        BufferedTokenStream tokenStream = Utils.toTokenStream(lexer);
+        io.github.kusoroadeolu.veneer.BibTeXLexer lexer = new io.github.kusoroadeolu.veneer.BibTeXLexer(CharStreams.fromString(s));
+        BufferedTokenStream tokenStream = Utils.toBufferedTokenStream(lexer);
 
         if (showLineNumbers) applyWithLines(sb, tokenStream);
         else applyWithoutLines(sb, tokenStream);

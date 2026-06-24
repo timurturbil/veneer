@@ -3,6 +3,7 @@ package io.github.kusoroadeolu.veneer.utils;
 import io.github.kusoroadeolu.clique.spi.AnsiCode;
 import io.github.kusoroadeolu.clique.style.StyleBuilder;
 import org.antlr.v4.runtime.BufferedTokenStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Token;
 
@@ -18,12 +19,21 @@ public class Utils {
       return String.format("%3d | ", lineNo);
     }
 
-    public static BufferedTokenStream toTokenStream(Lexer lexer){
+    public static BufferedTokenStream toBufferedTokenStream(Lexer lexer){
         lexer.removeErrorListeners();
         BufferedTokenStream tokenStream = new BufferedTokenStream(lexer);
         tokenStream.fill();
         return tokenStream;
     }
+
+    public static CommonTokenStream toCommonTokenStream(Lexer lexer){
+        lexer.removeErrorListeners();
+        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+        tokenStream.fill();
+        return tokenStream;
+    }
+
+
 
     public static boolean isNullOrBlank(String s){
         return s == null || s.isBlank();

@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.Token;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import io.github.kusoroadeolu.veneer.BibTeXLexer;
 
 import java.util.List;
 

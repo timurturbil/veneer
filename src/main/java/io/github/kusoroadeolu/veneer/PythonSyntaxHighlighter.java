@@ -10,7 +10,6 @@ import org.antlr.v4.runtime.Token;
 import io.github.kusoroadeolu.veneer.PythonLexer;
 
 
-
 import static io.github.kusoroadeolu.veneer.utils.Constants.CAPITAL_PATTERN;
 import static io.github.kusoroadeolu.veneer.utils.Utils.*;
 import static io.github.kusoroadeolu.veneer.utils.Utils.styleMultiLineToken;
@@ -28,7 +27,7 @@ public class PythonSyntaxHighlighter extends AbstractSyntaxHighlighter {
 
         StyleBuilder sb = Clique.styleBuilder();
         PythonLexer lexer = new PythonLexer(CharStreams.fromString(s));
-        var tokenStream = Utils.toTokenStream(lexer);
+        var tokenStream = Utils.toBufferedTokenStream(lexer);
         var tokens = tokenStream.getTokens();
 
         int[] lineNumber = new int[1];

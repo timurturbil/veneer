@@ -57,7 +57,7 @@ public interface SyntaxHighlighter {
      * @param stream the stream to print to
      * @throws IOException if the file cannot be read
      */
-    default void print(Path path, PrintStream stream) throws IOException{
+    default void print(Path path, PrintStream stream) throws IOException {
         stream.println(highlight(path));
     }
 

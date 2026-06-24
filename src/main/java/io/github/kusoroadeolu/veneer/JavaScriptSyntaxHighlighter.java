@@ -5,10 +5,11 @@ import io.github.kusoroadeolu.veneer.theme.SyntaxTheme;
 import io.github.kusoroadeolu.veneer.utils.Utils;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.Token;
-import io.github.kusoroadeolu.veneer.JavaScriptLexer;
 
 import static io.github.kusoroadeolu.veneer.utils.Constants.CAPITAL_PATTERN;
 import static io.github.kusoroadeolu.veneer.utils.Utils.*;
+import io.github.kusoroadeolu.veneer.JavaScriptLexer;
+
 
 public class JavaScriptSyntaxHighlighter extends AbstractSyntaxHighlighter{
     public JavaScriptSyntaxHighlighter() { super(); }
@@ -23,7 +24,7 @@ public class JavaScriptSyntaxHighlighter extends AbstractSyntaxHighlighter{
 
         StyleBuilder sb = Clique.styleBuilder();
         JavaScriptLexer lexer = new JavaScriptLexer(CharStreams.fromString(s));
-        var tokenStream = toTokenStream(lexer);
+        var tokenStream = toBufferedTokenStream(lexer);
         int[] lineNumber = new int[]{1};
 
         Token prev = null;

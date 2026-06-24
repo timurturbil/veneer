@@ -62,10 +62,10 @@ public class JavaSyntaxHighlighter extends AbstractSyntaxHighlighter{
         if (opTokenRange.isEmpty()) return s;
 
         TokenRange tokenRange = opTokenRange.get();
-        return tryStyleString(unit,tokenRange);
+        return doHighlight(unit,tokenRange);
     }
 
-    String tryStyleString(CompilationUnit unit, TokenRange tokenRange){
+    String doHighlight(CompilationUnit unit, TokenRange tokenRange){
         Set<PositionalJavaToken> methodNames = findMethodAndConstructorIdentifiers(unit);
         Set<PositionalJavaToken> typeTokens = findTypeDefinitions(unit);
         Set<PositionalJavaToken> constants = findConstantDefinitions(unit);
