@@ -116,12 +116,12 @@ fragment EXP
 
 WS
 
-    : [ \t\r]+ -> channel(HIDDEN)
+    : [ \t]+ -> channel(HIDDEN)
 
     ;
 
 NEWLINE
 
-    : [\n]+ -> channel(HIDDEN)
+    : [\n\r] -> channel(HIDDEN)
 
     ;

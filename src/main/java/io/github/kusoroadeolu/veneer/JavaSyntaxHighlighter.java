@@ -293,5 +293,4 @@ public class JavaSyntaxHighlighter extends AbstractSyntaxHighlighter{
     private record AstBundle(Set<PositionalJavaToken> methodNames, Set<PositionalJavaToken> typeTokens, Set<PositionalJavaToken> constants){
 
     }
-
 }

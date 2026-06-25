@@ -32,6 +32,6 @@ public interface SyntaxTheme {
     /** @return the color for type references e.g. {@code String}, {@code List}, {@code MyClass} */
     AnsiCode types();
 
-    /** @return the color for {@code static final} fields and enum constants */
+    /** @return the color for {@code static final} fields and enum constants. This can also be used for non-static final fields */
     AnsiCode constants();
 }

@@ -15,7 +15,7 @@ import java.util.Set;
 import static io.github.kusoroadeolu.veneer.utils.Utils.isNullOrBlank;
 
 
-public class JSONSyntaxHighlighter extends AbstractSyntaxHighlighter implements SyntaxHighlighter{
+public class JSONSyntaxHighlighter extends AbstractSyntaxHighlighter {
 
     public JSONSyntaxHighlighter(SyntaxTheme theme, boolean showLineNumbers) {
         super(theme, showLineNumbers);
@@ -76,22 +76,8 @@ public class JSONSyntaxHighlighter extends AbstractSyntaxHighlighter implements 
                 }
             }
             applyStyles(token, sb, keyIndices);
-
         }
     }
-
-//    void applyWithLines(StyleBuilder sb, CommonTokenStream tokens, Set<Integer> keyIndices) {
-//        int[] lineNumber = new int[1];
-//        int index = 0;
-//        sb.appendAndReset(Utils.formatNoTo3dp(++lineNumber[0]), theme.gutter());
-//        for (Token token : tokens.getTokens()) {
-//            if (token.getType() == JSONLexer.WS) {
-//                sb.appendAndReset(Utils.formatNoTo3dp(++lineNumber[0]), theme.gutter());
-//            }
-//            applyStyles(token, sb, keyIndices);
-//
-//        }
-//    }
 
     void applyStyles(Token token, StyleBuilder sb, Set<Integer> keyIndices) {
         int type = token.getType();
@@ -126,5 +112,4 @@ public class JSONSyntaxHighlighter extends AbstractSyntaxHighlighter implements 
             return visitChildren(ctx);
         }
     }
-
 }
