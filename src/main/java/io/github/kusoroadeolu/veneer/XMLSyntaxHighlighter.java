@@ -152,7 +152,6 @@ public class XMLSyntaxHighlighter extends AbstractSyntaxHighlighter {
         return type == XMLLexer.XMLDeclOpen;
     }
 
-    //Will include parser to distinguish tag names from attr names
     boolean isName(int type) {
         return type == XMLLexer.Name;
     }

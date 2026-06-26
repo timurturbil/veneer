@@ -25,7 +25,6 @@ class GoSyntaxHighlighterTest {
             }
             """;
         String styled = highlighter.highlight(snippet);
-        System.out.println(styled);
         assertTrue(styled.contains(SyntaxThemes.DEFAULT.keyword().ansiSequence()));
     }
 

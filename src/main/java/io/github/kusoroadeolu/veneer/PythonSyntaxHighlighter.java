@@ -54,10 +54,7 @@ public class PythonSyntaxHighlighter extends AbstractSyntaxHighlighter {
 
 
     void applyStyles(Token token, StyleBuilder sb, Token prev) {
-        if (token.getType() == Token.EOF) return;
-        else if (token.getType() == PythonLexer.INDENT || token.getType() == PythonLexer.DEDENT || token.getType() == PythonLexer.ERRORTOKEN) return;
-        else if (token.getChannel() == Token.HIDDEN_CHANNEL && token.getType() != PythonLexer.WS) return;
-
+        if (isIndentToken(token) || isHiddenChannel(token)) return;
 
         String text = token.getText();
         if (isComment(token)) {
@@ -79,13 +76,25 @@ public class PythonSyntaxHighlighter extends AbstractSyntaxHighlighter {
             else sb.appendAndReset(text, theme.types());
         } else if (isKeyword(token)) {
             sb.appendAndReset(text, theme.keyword());
-        } else {
+        } else if (!isEOF(token)){
             sb.appendAndReset(text);
         }
     }
 
     boolean isValidPrevToken(Token token){
         return  !isWhitespace(token) && token.getChannel() == Token.DEFAULT_CHANNEL;
+    }
+
+    boolean isEOF(Token token) {
+        return token.getType() == Token.EOF;
+    }
+
+    boolean isIndentToken(Token token) {
+        return token.getType() == PythonLexer.INDENT || token.getType() == PythonLexer.DEDENT || token.getType() == PythonLexer.ERRORTOKEN;
+    }
+
+    boolean isHiddenChannel(Token token) {
+        return token.getChannel() == Token.HIDDEN_CHANNEL && token.getType() != PythonLexer.WS;
     }
 
     boolean isWhitespace(Token token) {

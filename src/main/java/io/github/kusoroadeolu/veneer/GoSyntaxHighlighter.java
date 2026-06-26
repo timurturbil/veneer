@@ -36,30 +36,40 @@ public class GoSyntaxHighlighter extends AbstractSyntaxHighlighter {
         var tokenStream = toBufferedTokenStream(lexer);
 
         List<Token> tokens = tokenStream.getTokens();
-        int size = tokens.size();
-        int[] lineNumber = new int[1];
 
-        if (showLineNumbers) {
-            sb.appendAndReset(Utils.formatNoTo3dp(++lineNumber[0]), theme.gutter());
+        if (showLineNumbers) applyWithLines(tokens, sb);
+        else applyWithoutLines(tokens, sb);
+
+        return sb.toString();
+    }
+
+    void applyWithoutLines(List<Token> tokens, StyleBuilder sb) {
+        for (Token t : tokens) {
+            applyStyles(t, sb);
         }
+    }
+
+    void applyWithLines(List<Token> tokens, StyleBuilder sb) {
+        int[] lineNumber = new int[1];
+        int size = tokens.size();
+        sb.appendAndReset(Utils.formatNoTo3dp(++lineNumber[0]), theme.gutter());
+
 
         for (int i = 0; i < size; i++) {
             Token token = tokens.get(i);
-            if (showLineNumbers && isMultiLineToken(token)) {
+            if (isMultiLineToken(token)) {
                 styleMultiLineToken(token, lineNumber, sb, theme.gutter(), this::applyStyles);
-            }else if (showLineNumbers && isLineEnding(token)) {
+            }else if (isLineEnding(token)) {
                 String text = token.getText();
-                long newlineCount = text.chars().filter(c -> c == '\n').count();
+                long newlineCount = text.chars().filter(c -> c == '\n').sum();
                 for (int j = 0; j < newlineCount; j++) {
-                    sb.appendAndReset(NEWLINE);
+                    sb.append(NEWLINE);
                     sb.appendAndReset(Utils.formatNoTo3dp(++lineNumber[0]), theme.gutter());
                 }
             } else {
                 applyStyles(token, sb);
             }
         }
-
-        return sb.toString();
     }
 
     void applyStyles(Token token, StyleBuilder sb) {
@@ -69,6 +79,7 @@ public class GoSyntaxHighlighter extends AbstractSyntaxHighlighter {
         if (token.getChannel() == Token.HIDDEN_CHANNEL
                 && type != GoLexer.WS
                 && type != GoLexer.WS_NLSEMI
+                && type != GoLexer.TERMINATOR
                 && !isComment(type)) {
             return;
         }
@@ -95,7 +106,7 @@ public class GoSyntaxHighlighter extends AbstractSyntaxHighlighter {
 
     // A line ending is any non-string token whose text contains a newline.
     boolean isLineEnding(Token token) {
-        return token.getText().contains(Constants.NEWLINE);
+        return token.getType() == GoLexer.TERMINATOR || token.getText().contains(Constants.NEWLINE);
     }
 
     boolean isKeyword(int type) {
