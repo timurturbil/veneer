@@ -1,6 +1,6 @@
 # Veneer
 
-Syntax highlighting for Java, Python, Go, Lua, and JavaScript via ANSI color codes. Built on [JavaParser](https://github.com/javaparser/javaparser), [ANTLR4](https://github.com/antlr/antlr4), and [Clique](https://github.com/kusoroadeolu/Clique).
+Syntax highlighting for Java, Python, Go, Lua, JavaScript, BibTeX, JSON, and XML via ANSI color codes. Built on [JavaParser](https://github.com/javaparser/javaparser), [ANTLR4](https://github.com/antlr/antlr4), and [Clique](https://github.com/kusoroadeolu/Clique).
 
 ---
 
@@ -16,7 +16,7 @@ Syntax highlighting for Java, Python, Go, Lua, and JavaScript via ANSI color cod
 <dependency>
     <groupId>io.github.kusoroadeolu</groupId>
     <artifactId>veneer</artifactId>
-    <version>1.2.1</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
@@ -46,7 +46,7 @@ h.highlight(Path.of("...")); // reads file, returns styled string
 h.print(sourceCode);           // prints to stdout
 ```
 
-Available highlighters: `JavaSyntaxHighlighter`, `PythonSyntaxHighlighter`, `GoSyntaxHighlighter`, `LuaSyntaxHighlighter`, `JavaScriptSyntaxHighlighter`, `BibTeXSyntaxHighlighter`.
+Available highlighters: `JavaSyntaxHighlighter`, `PythonSyntaxHighlighter`, `GoSyntaxHighlighter`, `LuaSyntaxHighlighter`, `JavaScriptSyntaxHighlighter`, `BibTeXSyntaxHighlighter`, `JSONSyntaxHighlighter`, `XMLSyntaxHighlighter`.
 
 ---
 
@@ -83,65 +83,83 @@ public class MyTheme implements SyntaxTheme {
 ## Token categories
 
 ### Java
-| Category   | Examples                                               |
-|------------|--------------------------------------------------------|
-| Keywords   | `public`, `void`, `class`, `return`  etc.              |
-| Strings    | literals, text blocks, Javadoc                         |
-| Numbers    | `42`, `3.14f`, `0xFF`                                  |
-| Comments   | `//`, `/* */`                                          |
-| Annotations| `@Override`, `@SuppressWarnings`                       |
-| Methods    | Declared method and constructor names and method calls |
-| Types      | `String`, `List`, `MyClass`                            |
-| Constants  | `static final` fields, enum constants and field expr   |
+| Category    | Examples                                               |
+|-------------|--------------------------------------------------------|
+| Keywords    | `public`, `void`, `class`, `return` etc.               |
+| Strings     | literals, text blocks, Javadoc                         |
+| Numbers     | `42`, `3.14f`, `0xFF`                                  |
+| Comments    | `//`, `/* */`                                          |
+| Annotations | `@Override`, `@SuppressWarnings`                       |
+| Methods     | Declared method and constructor names and method calls |
+| Types       | `String`, `List`, `MyClass`                            |
+| Constants   | `static final` fields, enum constants and field expr   |
 
 ### Python
-| Category   | Examples                                              |
-|------------|-------------------------------------------------------|
-| Keywords   | `def`, `class`, `return`, `yield`                     |
-| Strings    | `"hello"`, `'world'`, f-strings                       |
-| Numbers    | `42`, `3.14`, `0xFF`                                  |
-| Comments   | `# comment`                                           |
-| Annotations| `@staticmethod`, `@property`                          |
-| Methods    | Declared function names                               |
-| Types      | Return type hints (`-> int`, `-> dict`)               |
-| Constants  | Names matching `ALL_CAPS` convention                  |
+| Category    | Examples                                              |
+|-------------|-------------------------------------------------------|
+| Keywords    | `def`, `class`, `return`, `yield`                     |
+| Strings     | `"hello"`, `'world'`, f-strings                       |
+| Numbers     | `42`, `3.14`, `0xFF`                                  |
+| Comments    | `# comment`                                           |
+| Annotations | `@staticmethod`, `@property`                          |
+| Methods     | Declared function names                               |
+| Types       | Return type hints (`-> int`, `-> dict`)               |
+| Constants   | Names matching `ALL_CAPS` convention                  |
 
 ### Go
-| Category   | Examples                                              |
-|------------|-------------------------------------------------------|
-| Keywords   | `func`, `package`, `var`, `const`, `return`           |
-| Strings    | `"hello"`, raw string literals, rune literals         |
-| Numbers    | `42`, `3.14`, `0xFF`, `1i`                            |
-| Comments   | `//`, `/* */`                                         |
+| Category  | Examples                                      |
+|-----------|-----------------------------------------------|
+| Keywords  | `func`, `package`, `var`, `const`, `return`   |
+| Strings   | `"hello"`, raw string literals, rune literals |
+| Numbers   | `42`, `3.14`, `0xFF`, `1i`                    |
+| Comments  | `//`, `/* */`                                 |
 
 ### Lua
-| Category   | Examples                                              |
-|------------|-------------------------------------------------------|
-| Keywords   | `local`, `function`, `if`, `for`, `return`, `end`     |
-| Strings    | `"hello"`, `'world'`, `[[long strings]]`              |
-| Numbers    | `42`, `3.14`, `0xFF`                                  |
-| Comments   | `--`, `--[[ block comments ]]`                        |
+| Category  | Examples                                              |
+|-----------|-------------------------------------------------------|
+| Keywords  | `local`, `function`, `if`, `for`, `return`, `end`     |
+| Strings   | `"hello"`, `'world'`, `[[long strings]]`              |
+| Numbers   | `42`, `3.14`, `0xFF`                                  |
+| Comments  | `--`, `--[[ block comments ]]`                        |
 
 ### JavaScript
-| Category   | Examples                                              |
-|------------|-------------------------------------------------------|
-| Keywords   | `const`, `let`, `function`, `class`, `async`, `await`, `null`, `true`, `false` |
-| Strings    | `"hello"`, template literals                          |
-| Numbers    | `42`, `3.14`, `0xFF`, `100n`                          |
-| Comments   | `//`, `/* */`, JSX comments                           |
-| Methods    | Declared function names                               |
-| Constants  | Names matching `ALL_CAPS` convention                  |
+| Category  | Examples                                                                        |
+|-----------|---------------------------------------------------------------------------------|
+| Keywords  | `const`, `let`, `function`, `class`, `async`, `await`, `null`, `true`, `false` |
+| Strings   | `"hello"`, template literals                                                    |
+| Numbers   | `42`, `3.14`, `0xFF`, `100n`                                                    |
+| Comments  | `//`, `/* */`, JSX comments                                                     |
+| Methods   | Declared function names                                                         |
+| Constants | Names matching `ALL_CAPS` convention                                            |
 
 ### BibTeX
-| Category   | Examples                                                        |
-|------------|-----------------------------------------------------------------|
-| Keywords   | `@article`, `@book`, `@string`, `@preamble`, `@comment`         |
-| Strings    | `{brace delimited}`, `"double quoted"`                          |
-| Numbers    | `2024`, `42` (bare integer field values)                        |
-| Comments   | `% line comment`                                                |
-| Cite Keys  | `knuth1984`, `DBLP:conf/pldi/PadhiSM16`                        |
-| Fields     | `author`, `title`, `year`, `doi`                                |
-| Macros     | `jan`, `kopp`, `PRL` (string macro references)                  |
+| Category  | Examples                                                        |
+|-----------|-----------------------------------------------------------------|
+| Keywords  | `@article`, `@book`, `@string`, `@preamble`, `@comment`         |
+| Strings   | `{brace delimited}`, `"double quoted"`                          |
+| Numbers   | `2024`, `42` (bare integer field values)                        |
+| Comments  | `% line comment`                                                |
+| Cite Keys | `knuth1984`, `DBLP:conf/pldi/PadhiSM16`                        |
+| Fields    | `author`, `title`, `year`, `doi`                                |
+| Macros    | `jan`, `kopp`, `PRL` (string macro references)                  |
+
+### JSON
+| Category  | Examples                   |
+|-----------|----------------------------|
+| Keywords  | `true`, `false`, `null`    |
+| Strings   | `"hello"`, `"world"`       |
+| Numbers   | `42`, `3.14`               |
+| Constants | Key names `"name"`, `"id"` |
+
+### XML
+| Category  | Examples                                                              |
+|-----------|-----------------------------------------------------------------------|
+| Keywords  | `<?xml` declaration                                                   |
+| Strings   | Attribute values, `<![CDATA[...]]>`                                   |
+| Comments  | `<!-- -->`, processing instructions `<?...?>`                         |
+| Constants | Entity refs `&amp;`, char refs `&#x27;`, attribute names              |
+| Types     | Element and tag names                                                 |
+
 ---
 
 ## Known quirks

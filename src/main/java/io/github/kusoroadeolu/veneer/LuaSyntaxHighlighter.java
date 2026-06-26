@@ -27,8 +27,10 @@ public class LuaSyntaxHighlighter extends AbstractSyntaxHighlighter{
         StyleBuilder sb = Clique.styleBuilder();
         LuaLexer lexer = new LuaLexer(CharStreams.fromString(s));
         var tokenStream = Utils.toBufferedTokenStream(lexer);
+
         if (showLineNumbers) applyWithLines(sb, tokenStream);
         else applyWithoutLines(sb, tokenStream);
+
         return sb.toString();
     }
 
