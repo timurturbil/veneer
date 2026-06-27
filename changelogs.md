@@ -17,3 +17,11 @@
 
 - Default theme `types()` color updated from gray to a lighter blue
 - Migrated `Clique` from version 4.0.1 to 4.0.2 
+
+## veneer [1.3.1] - 2026-06-26
+### Fixed
+
+- Encapsulated public method in xml highlighter
+
+
+
