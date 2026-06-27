@@ -80,7 +80,7 @@ public class XMLSyntaxHighlighter extends AbstractSyntaxHighlighter {
         }
     }
 
-    public void styleMultiLineToken(Token token, int[] lineNumber, StyleBuilder sb, Set<Integer> indices) {
+    void styleMultiLineToken(Token token, int[] lineNumber, StyleBuilder sb, Set<Integer> indices) {
         List<String> lines = token.getText().lines().toList();
         for (int i = 0; i < lines.size(); i++) {
             if (i > 0) {
