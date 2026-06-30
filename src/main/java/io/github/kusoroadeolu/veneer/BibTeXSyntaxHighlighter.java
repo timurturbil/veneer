@@ -2,6 +2,8 @@ package io.github.kusoroadeolu.veneer;
 
 import io.github.kusoroadeolu.clique.Clique;
 import io.github.kusoroadeolu.clique.style.StyleBuilder;
+import io.github.kusoroadeolu.veneer.bibtex.BibTeXHighlightRegion;
+import io.github.kusoroadeolu.veneer.bibtex.BibTeXTokenCategory;
 import io.github.kusoroadeolu.veneer.theme.SyntaxTheme;
 import io.github.kusoroadeolu.veneer.utils.Constants;
 import io.github.kusoroadeolu.veneer.utils.Utils;
@@ -9,6 +11,7 @@ import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.Token;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.github.kusoroadeolu.veneer.BibTeXLexer.*;
@@ -34,6 +37,52 @@ public class BibTeXSyntaxHighlighter extends AbstractSyntaxHighlighter {
         else applyWithoutLines(sb, tokenStream);
 
         return sb.toString();
+    }
+
+    /**
+     * Computes highlight regions (start/end offsets + category) without producing
+     * ANSI-styled output. Useful for consumers (e.g. GUI text editors) that need
+     * to apply their own styling mechanism (CSS classes, text attributes, etc.)
+     * instead of ANSI escape codes.
+     *
+     * @param s the BibTeX source to analyze
+     * @return a list of non-overlapping highlight regions covering the source,
+     *         ordered by their start offset
+     */
+    public List<BibTeXHighlightRegion> computeHighlightRegions(String s) {
+        List<BibTeXHighlightRegion> regions = new ArrayList<>();
+        if (isNullOrBlank(s)) return regions;
+
+        io.github.kusoroadeolu.veneer.BibTeXLexer lexer = new io.github.kusoroadeolu.veneer.BibTeXLexer(CharStreams.fromString(s));
+        BufferedTokenStream tokenStream = Utils.toBufferedTokenStream(lexer);
+        List<Token> tokens = tokenStream.getTokens();
+
+        for (int i = 0; i < tokens.size(); i++) {
+            Token token = tokens.get(i);
+            if (token.getType() == Token.EOF) continue;
+
+            int start = token.getStartIndex();
+            int end = token.getStopIndex() + 1;
+            if (start < 0 || end <= start) continue;
+
+            BibTeXTokenCategory category = classify(token, tokens, i);
+            if (category != BibTeXTokenCategory.DEFAULT) {
+                regions.add(new BibTeXHighlightRegion(start, end, category));
+            }
+        }
+
+        return regions;
+    }
+
+    BibTeXTokenCategory classify(Token token, List<Token> tokens, int index) {
+        if (isComment(token)) return BibTeXTokenCategory.COMMENT;
+        if (isKeyword(token)) return BibTeXTokenCategory.KEYWORD;
+        if (isBraceString(token) || isString(token)) return BibTeXTokenCategory.STRING;
+        if (isNumber(token)) return BibTeXTokenCategory.NUMBER;
+        if (isCiteKey(token, tokens, index)) return BibTeXTokenCategory.CITE_KEY;
+        if (isFieldName(token, tokens, index)) return BibTeXTokenCategory.FIELD_NAME;
+        if (isName(token)) return BibTeXTokenCategory.MACRO;
+        return BibTeXTokenCategory.DEFAULT;
     }
 
     void applyWithLines(StyleBuilder sb, BufferedTokenStream tokenStream) {
