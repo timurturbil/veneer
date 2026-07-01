@@ -2,8 +2,6 @@ package io.github.kusoroadeolu.veneer;
 
 import io.github.kusoroadeolu.clique.Clique;
 import io.github.kusoroadeolu.clique.style.StyleBuilder;
-import io.github.kusoroadeolu.veneer.bibtex.BibTeXHighlightRegion;
-import io.github.kusoroadeolu.veneer.bibtex.BibTeXTokenCategory;
 import io.github.kusoroadeolu.veneer.theme.SyntaxTheme;
 import io.github.kusoroadeolu.veneer.utils.Constants;
 import io.github.kusoroadeolu.veneer.utils.Utils;
@@ -19,6 +17,23 @@ import static io.github.kusoroadeolu.veneer.utils.Utils.isNullOrBlank;
 import static io.github.kusoroadeolu.veneer.utils.Utils.styleMultiLineToken;
 
 public class BibTeXSyntaxHighlighter extends AbstractSyntaxHighlighter {
+
+    public enum BibTeXTokenCategory {
+        KEYWORD,
+        STRING,
+        NUMBER,
+        COMMENT,
+        CITE_KEY,
+        FIELD_NAME,
+        MACRO,
+        DEFAULT
+    }
+
+    public record BibTeXHighlightRegion(
+            int start,
+            int end,
+            BibTeXTokenCategory category
+    ) {}
 
     public BibTeXSyntaxHighlighter() { super(); }
     public BibTeXSyntaxHighlighter(boolean showLineNumbers) { super(showLineNumbers); }
